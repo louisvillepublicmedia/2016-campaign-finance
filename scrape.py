@@ -54,7 +54,7 @@ def download_individual_contrib():
     with open('data/csv/process/' + datestamp + '_individual-contributions.csv', 'wb') as outcsv:
         writer = csv.writer(outcsv)
         
-        with open('data/headers/itcont-header.csv', 'rb') as incsv:
+        with open('headers/itcont-header.csv', 'rb') as incsv:
             reader = csv.reader(incsv)
             writer.writerows(reader)
             with open('data/csv/itcont.csv', 'rb') as indata:
@@ -78,7 +78,7 @@ def download_cmte_list():
     with open('data/csv/process/' + datestamp + '_cmte-list.csv', 'wb') as outcsv:
         writer = csv.writer(outcsv)
         
-        with open('data/headers/cm-header.csv', 'rb') as incsv:
+        with open('headers/cm-header.csv', 'rb') as incsv:
             reader = csv.reader(incsv)
             writer.writerows(reader)
             with open('data/csv/cm.csv', 'rb') as indata:
