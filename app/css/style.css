@@ -1,0 +1,89 @@
+.about-text{
+  margin-top:2em;
+}
+
+.medium-graphic{
+  font-size: 2em;
+}
+
+.large-graphic{
+  font-size: 4em;
+}
+
+.intro-row{
+  border-bottom: 3px solid #bababa;
+}
+
+.row{
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+p{
+  font-size: 1.25em;
+}
+
+span.dropped{
+  color:#bababa;
+}
+
+h3{
+  margin-bottom:1.5em;
+}
+
+label{
+    font-weight: normal;
+}
+
+#footer{
+  color:#ffffff;
+  background:#000000;
+  min-height:150px;
+  padding:1.5em .5em;
+  font-size: .75em;
+}
+
+#footer a{
+  text-decoration: underline;
+  color:#ffffff;
+}
+
+.chartist-tooltip{
+    background: #cccccc;
+    color: #000000;
+    font-size: 1.25em;
+    padding: 20px 0 20px 50px;
+    width: 30%;
+}
+
+.ct-series-b .ct-line,
+.ct-series-b .ct-point{
+    stroke: #069ace;
+}
+
+/*=====================================================
+=            Bootstrap 2.3.2 Media Queries            =
+=====================================================*/
+@media only screen and (max-width : 1200px) {
+
+}
+
+@media only screen and (max-width : 979px) {
+
+}
+
+@media only screen and (max-width : 767px) {
+
+}
+
+@media only screen and (max-width : 480px) {
+    .chartist-tooltip{
+        width: 100%;
+        padding-top:100px;
+    }
+
+}
+
+@media only screen and (max-width : 320px) {
+
+}

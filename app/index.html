@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kentucky Campaign Finance</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  
+  <body>
+    
+    <div id="container"></div>
+    <div id="footer">
+      <div class="col-sm-6">
+        <div class="col-sm-4 col-lg-3 col-xs-4">
+          <a target="_parent" href="http://kycir.org/"><img class="img-responsive" src="img/KyCIR-logo.jpg" alt="KYCIR logo" /></a>
+        </div>
+        <h4><a target="_parent" href="http://kycir.org/tag/campaign-finance/">Read more about Kentucky campaign finance on the KYCIR website.</a></h4>
+      </div>
+      <div class="col-sm-4 pull-right">
+        <p>This app was built by KYCIR using FEC data.</p>
+      </div>
+    </div>
+    
+    <script id="template" type="text/ractive">
+      <div class="container">
+        
+        <div class="row intro-row">
+          <div class="col-md-7">
+            <h1>{{state}} Campaign Finance</h1>
+            <p class="lead">Presidential Race 2016</p>
+          </div>
+          <div class="col-md-5">
+            <p class="about-text">Explore donations given to the 2016 presidential candidates by Kentucky citizens. These numbers will be updated regularly. <em>Last updated {{updated}}.</em></p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6 text-center">
+            <div class="large-graphic">{{currency(candidate_donactions)}}</div>
+            <p>donated by Kentucky citizens to presidential candidates</p>
+          </div>
+          <div class="col-md-6 text-center">
+            <p><span class="medium-graphic">{{currency(to_republicans)}}</span> to Republican candidates</p>
+            <p><span class="medium-graphic">{{currency(to_democrats)}}</span> to Democratic candidates</p>
+          </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+              <div class="ct-chart ct-double-octave"></div>
+              <div class="text-center"><em>Click the candidate names below to compare campaign contributions.</em></div>
+            </div>
+        </div>
+        
+        <div class="row">                  
+          {{#each candidate_totals}}
+            <div class="col-md-7">
+              <label>
+                <input class='candidate' type='checkbox' id='{{name.toLowerCase().split(",")[0]}}'>
+                <span class="{{status}}"><strong>{{name}}</strong> received {{currency(sum)}} from {{format(count)}} donations</span>
+              </label>
+            </div>
+          {{/each}}
+        </div>
+        
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="text-center">Top donors to PACs</h3>
+            <table class="table">
+              <thead>
+                <th>Name</th>
+                <th>Contributions</th>
+                <th>Total</th>
+              </thead>
+              <tbody>
+                {{#each top_pac_donors:num}}
+                  <tr>
+                    <td>{{name}}</td>
+                    <td>{{count}}</td>
+                    <td>{{currency(sum)}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-5 col-md-offset-1">
+            <h3 class="text-center">Top donors to individual candidates</h3>
+            <table class="table">
+              <thead>
+                <th>Name</th>
+                <th>Contributions</th>
+                <th>Total</th>
+              </thead>
+              <tbody>
+                {{#each top_candidate_donors:num}}
+                  <tr>
+                    <td>{{name}}</td>
+                    <td>{{format(count)}}</td>
+                    <td>{{currency(sum)}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+    </script>
+
+    <script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
+    <script src='data/ky_totals.js'></script>
+    <script src='data/candidate_charts.js'></script>
+    <script src='js/jquery-2.2.3.min.js'></script>
+    <script src='js/pym.min.js'></script>
+    <script src='bower_components/chartist/dist/chartist.min.js'></script>
+    <script src='bower_components/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js'></script>
+    <script>
+      $( document ).ready(function() {
+          
+          new pym.Child();
+        
+          var active_series = []
+          
+          var data = {
+            // A labels array that can contain any sort of values
+            labels: count_labels,
+            // Our series array that contains series objects or in this case series data arrays
+            series: active_series
+          };
+          
+          function createChart(){
+            new Chartist.Line('.ct-chart', data, {
+              plugins: [
+                Chartist.plugins.tooltip()
+              ]
+            });
+          }
+          
+          /*$('#clinton').change(function () {
+              if (this.checked) {
+                  active_series.push(clinton_count_series);
+                  createChart()
+              } else {
+                  //console.log('function ran but didnt find a checked box')
+                  var clinton_index = active_series.indexOf(clinton_count_series);
+                  if (clinton_index > -1) {
+                      active_series.splice(clinton_index, 1);
+                      createChart()
+                  }
+              }
+          });*/
+          
+          var candidates_list = document.getElementsByClassName("candidate");
+          
+          for(var i=0; i<candidates_list.length; i++) {
+            candidate_id = candidates_list[i].id;
+            $('#' + candidate_id).change(function () {
+              if (this.checked) {
+                candidate_sum_series = window[this.id + '_sum_series'];
+                active_series.push(candidate_sum_series);
+                createChart()
+              }else{
+                candidate_sum_series = window[this.id + '_sum_series'];
+                var index = active_series.indexOf(candidate_sum_series);
+                if (index > -1) {
+                  active_series.splice(index, 1);
+                  createChart()
+                }
+              }
+            });
+          }
+
+          // Create a new line chart object where as first parameter we pass in a selector
+          // that is resolving to our chart container element. The Second parameter
+          // is the actual data object.
+          new Chartist.Line('.ct-chart', data, {
+            plugins: [
+              Chartist.plugins.tooltip()
+            ]
+          });
+      
+      });
+                  
+      var ractive = new Ractive({
+        el: '#container',
+        template: '#template',
+        data: { 
+          state: state, 
+          updated: updated,
+          total_donated: total_donated_sum,
+          candidate_donactions: total_candidate_donated_sum,
+          to_republicans: to_republicans,
+          to_democrats: to_democrats,
+          candidate_totals: candidate_contributions,
+          top_pac_donors: top_donors_to_pacs,
+          top_candidate_donors: top_donors_to_candidates,
+          format: function ( num ) {
+            if ( num > 1000000000 ) return ( num / 1000000000 ).toFixed( 1 ) + ' billion';
+            if ( num > 1000000 ) return ( num / 1000000 ).toFixed( 1 ) + ' million';
+            if ( num > 1000 ) return ( Math.floor( num / 1000 ) ) + ',' + ( num % 1000 );
+            return num;
+          },
+          currency: function numberWithCommas(x) {
+            return '$' + x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          },
+          currency_general: function ( num ) {
+            if ( num > 1000000000 ) return '$' + ( num / 1000000000 ).toFixed( 1 ) + ' billion';
+            if ( num > 1000000 ) return '$' + ( num / 1000000 ).toFixed( 1 ) + ' million';
+            if ( num > 1000 ) return '$' + ( Math.floor( num / 1000 ) ) + ',' + ( num % 1000 );
+            return '$' + num;
+          }
+        }
+      });
+    </script>
+
+
+</html>

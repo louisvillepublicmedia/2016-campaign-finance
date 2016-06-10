@@ -1,0 +1,11 @@
+top_donors_to_pacs = [{name: "JONES, DAVID A", count: 1, sum: 200000},{name: "FARISH, WILLIAM AMBASSADOR", count: 1, sum: 125000},{name: "STAND FORTRUTH, INC.", count: 1, sum: 100000},{name: "JENSEN, ELISABETH", count: 1, sum: 98142},{name: "BROWN, CHRISTINA LEE", count: 7, sum: 65600},]
+top_donors_to_candidates = [{name: "ANDERSON, BARBARA A. MS.", count: 4, sum: 10000},{name: "SIVERT, GEORGE A. MR.", count: 23, sum: 7400},{name: "DOWNING, JOHN E. DR. M.D.", count: 23, sum: 7400.00},{name: "SMITH, MIKE", count: 10, sum: 6200},{name: "SIVERT, BEVERLY YORK", count: 12, sum: 6150},]
+candidate_contributions = [{name: "Clinton, Hillary Rodham", count: 2721, sum: 443850.90, status: "current"},{name: "Sanders, Bernard", count: 6801, sum: 352235.53, status: "current"},{name: "Cruz, Rafael Edward 'Ted'", count: 2497, sum: 231120.74, status: "current"},{name: "Kasich, John R.", count: 127, sum: 84550, status: "current"},{name: "Trump, Donald J.", count: 91, sum: 27653.62, status: "current"},{name: "Paul, Rand", count: 1174, sum: 367924.05, status: "dropped"},{name: "Carson, Benjamin S.", count: 2369, sum: 208804.98, status: "dropped"},{name: "Rubio, Marco", count: 534, sum: 128756.13, status: "dropped"},{name: "OMalley, Martin Joseph", count: 101, sum: 113967.94, status: "dropped"},{name: "Bush, Jeb", count: 143, sum: 72027, status: "dropped"},]
+to_republicans = 1176838.52
+to_democrats = 912304.37
+total_candidate_donated_sum = 2090142.89
+total_candidate_donated_count = 16855
+total_donated_sum = 11813129
+total_donated_count = 10764
+updated = "04/26/16"
+state = "Kentucky"
