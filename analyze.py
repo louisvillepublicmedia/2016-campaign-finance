@@ -19,7 +19,7 @@ ky_candidate_contributions = agate.Table.from_csv(ky_candidates_file, column_typ
 ky_all_contributions = agate.Table.from_csv(ky_all_contributions_file, delimiter='|')
 cmte_list = agate.Table.from_csv(cmte_list_file, delimiter='|')
 
-current_candidate_cmte_ids = ['C00580100', 'C00577130', 'C00581876', 'C00575795', 'C00574624']
+current_candidate_cmte_ids = ['C00580100','C00575795']
     #Trump, Donald J. = C00580100
     #Sanders, Bernard = C00577130
     #Kasich, John R. = C00581876

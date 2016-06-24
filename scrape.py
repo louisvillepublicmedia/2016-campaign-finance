@@ -27,7 +27,7 @@ def download_state_candidate_contributions():
         
     
     # Remove extraneous column and save with datestamp
-    with open('data/P00000001-KY.csv',"rb") as incsv:
+    with open('data/csv/P00000001-KY.csv',"rb") as incsv:
         reader = csv.reader(incsv)
         with open('data/csv/process/' + datestamp + '_ky-candidate-contributions.csv','wb') as outcsv:
             writer = csv.writer(outcsv)
